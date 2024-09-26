@@ -1,4 +1,4 @@
-import Bookings from "../Models/Booking.schema.js";
+import Bookings from "../Models/booking.schema.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import Users from "../Models/user.schema.js";
