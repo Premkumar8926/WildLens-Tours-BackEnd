@@ -1,11 +1,10 @@
 import nodemailer from "nodemailer"
 import dotenv from "dotenv"
-dotenv.config(); // Configure dotenv to load environment variables from a .env file
 
+dotenv.config(); // Configure dotenv to load environment variables from a .env file
 
 // Function to send a password reset email
 export const mail = (senderEmail, verificationString) => {
-
     // Create a transporter object
     const mailTransporter = nodemailer.createTransport({
         service: 'gmail',
@@ -24,17 +23,17 @@ export const mail = (senderEmail, verificationString) => {
         to: senderEmail,
         subject: "Reset Your Password",
         html: `
-        <h3> Dear user, </h3>
+        <h3>Dear user,</h3>
         
-        <p>Sorry to hear you’re having trouble logging into your account. We got a message that you forgot your password. If this was you, you can get right back into your account or reset your password now. </p>
+        <p>Sorry to hear you're having trouble logging into your account. We got a message that you forgot your password. If this was you, you can get right back into your account or reset your password now.</p>
 
         <p>This reset link will be active only for 10 min so change your password now!</p>
 
-        <p> Click the following Link to reset your password \n ${resetLink} </p>
+        <p>Click the following Link to reset your password: <a href="${resetLink}">${resetLink}</a></p>
 
-        <p>If you didn’t request a login link or a password reset, you can ignore this message. </P>
+        <p>If you didn't request a login link or a password reset, you can ignore this message.</p>
 
-        <p>Thank You</P>`
+        <p>Thank You</p>`
     }
 
     // Send the email using the transporter
@@ -49,7 +48,6 @@ export const mail = (senderEmail, verificationString) => {
 }
 
 export const verifyMail = (senderEmail, verificationString) => {
-
     // Create a transporter object
     const mailTransporter = nodemailer.createTransport({
         service: 'gmail',
@@ -59,7 +57,7 @@ export const verifyMail = (senderEmail, verificationString) => {
         }
     })
 
-    // Generate the password reset link
+    // Generate the verification link
     const verificationLink = `https://wildlentoursfe.netlify.app/activation/${verificationString}`;
 
     // Email details
@@ -68,33 +66,21 @@ export const verifyMail = (senderEmail, verificationString) => {
         to: senderEmail,
         subject: "Account activation",
         html: `
-        <h3> Dear user, </h3>
+        <h3>Dear user,</h3>
         
         <p>Welcome to WildLens Tours</p>
 
-        <p>we are happy to be a part of your journey</p>
+        <p>We are happy to be a part of your journey</p>
 
-        <p>Click the following button to activate your account:</p>
+        <p>Click the following link to activate your account:</p>
 
-        <a href="${verificationLink}" style="
-           display: inline-block;
-           padding: 10px 20px;
-           font-size: 16px;
-           color: #ffffff;
-           background-color: #007bff;
-           text-align: center;
-           text-decoration: none;
-           border-radius: 5px;
-           font-family: Arial, sans-serif;
-           font-weight: bold;
-           border: 1px solid #007bff;
-           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-           transition: background-color 0.3s ease;
-        ">
-           Activate Your Account
-        </a>
+        <p><a href="${verificationLink}">Activate Your Account</a></p>
 
-        <p>Thank You</P>`
+        <p>If the above link doesn't work, copy and paste this URL into your browser:</p>
+
+        <p>${verificationLink}</p>
+
+        <p>Thank You</p>`
     }
 
     // Send the email using the transporter
@@ -108,8 +94,7 @@ export const verifyMail = (senderEmail, verificationString) => {
     })
 }
 
-export const sendMail = (senderEmail, subject,content) => {
-
+export const sendMail = (senderEmail, subject, content) => {
     // Create a transporter object
     const mailTransporter = nodemailer.createTransport({
         service: 'gmail',
@@ -119,18 +104,17 @@ export const sendMail = (senderEmail, subject,content) => {
         }
     })
 
-
     // Email details
     const details = {
         from: process.env.User,
         to: senderEmail,
         subject: subject,
         html: `
-        <h3> Dear user,</h3>
+        <h3>Dear user,</h3>
         
-        <p>${content}<p>
+        <p>${content}</p>
          
-        <p>Thank You</P>`
+        <p>Thank You</p>`
     }
 
     // Send the email using the transporter
